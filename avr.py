@@ -21,8 +21,11 @@ from distutils.spawn import find_executable
 
 version=2.1
 
+SCRIPT_DIR = os.path.dirname(__file__) + "/"
+SCRIPT_PATH = SCRIPT_DIR + "build/avr"
+
 DEFAULT_TOP="-"
-DEFAULT_BIN="build/bin"
+DEFAULT_BIN=SCRIPT_DIR + "build/bin"
 DEFAULT_NAME="test"
 DEFAULT_PROP_SELECT="-"
 DEFAULT_INIT_FILE="-"
@@ -123,7 +126,7 @@ def split_path(name):
 def main():
 	known, opts = getopts(header)
 	print(short_header)
-	if not os.path.isfile("build/avr"):
+	if not os.path.isfile(SCRIPT_PATH):
 		raise Exception("avr: main shell script not found")
 	if not os.path.isfile(opts.bin + "/vwn"):
 		raise Exception("avr: vwn binary not found")
@@ -185,7 +188,7 @@ def main():
 				opts.yosys = ys_path
 			print("\t(found yosys in %s)" % opts.yosys)
 	
-	command = "./build/avr"
+	command = SCRIPT_PATH
 	command = command + " " + f
 	command = command + " " + str(opts.top)
 	command = command + " " + path
