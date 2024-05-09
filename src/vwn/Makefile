@@ -26,7 +26,7 @@ endif
 ifeq ($(ENABLE_BTOR2), 1)
   BTOR2_DIR = $(DEPS)/btor2tools
   BTOR2_LIB = -L$(BTOR2_DIR)/build/lib -lbtor2parser
-  INCLUDE += -I$(BTOR2_DIR)/src
+  INCLUDE += -I$(BTOR2_DIR)/src/btor2parser
   LINKLIBS += $(BTOR2_LIB)
 endif
 
