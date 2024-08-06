@@ -44,18 +44,6 @@ echo "  Done!"
 popd
 
 
-### Build and install btor2tools
-pushd .
-echo "  Installing Btor2Tools from https://github.com/Boolector/btor2tools ..."
-git clone https://github.com/Boolector/btor2tools.git
-cd btor2tools
-./configure.sh --static
-cd build
-make -j$(nproc)
-cd ../..
-echo "  Done!"
-popd
-
 echo "  Skipping installing Z3 (install manually if needed)"
 ### By default, z3 installation is disabled
 # ### Build and install z3
