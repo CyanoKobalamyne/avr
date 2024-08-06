@@ -25,8 +25,9 @@
 
 /// Configurations
 /// Note: Only one of the below flag should be enabled
+#include "reach_backend_config.h"
 
-#define BACKEND_Y2		// Yices 2 for all queries
+// #define BACKEND_Y2		// Yices 2 for all queries
 // #define BACKEND_BT		// Yices 2 for abstract, Boolector for bv queries
 // #define BACKEND_M5		// Yices 2 for abstract, MathSAT 5 for bv queries
 
