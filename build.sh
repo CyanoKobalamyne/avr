@@ -14,6 +14,11 @@ popd
 pushd .
 cd src
 make -j$(nproc) all
+echo "#define BACKEND_BT 1" > reach/reach_backend_config.h
+make BIN_DIR=$(pwd)/../build/bin_bt_cad -j$(nproc) all
+echo "#define BACKEND_M5 1" > reach/reach_backend_config.h
+make BIN_DIR=$(pwd)/../build/bin_msat -j$(nproc) all
+echo "#define BACKEND_Y2 1" > reach/reach_backend_config.h
 cd ..
 popd
 
