@@ -1,4 +1,4 @@
-STATIC_MODE := 0
+STATIC_MODE ?= 0
 
 ### enable/disable solver environments
 ### by default, z3 environment is disabled
@@ -14,8 +14,9 @@ ENABLE_VMT   := 1
 ENABLE_BTOR2 := 1
 
 CURR_DIR = $(shell pwd)
-BIN_DIR = $(CURR_DIR)/../../build/bin
 DEPS = $(CURR_DIR)/../../deps
+
+BIN_DIR ?= $(CURR_DIR)/../../build/bin
 
 ifeq ($(STATIC_MODE), 1)
  STATIC_VWN = 1
