@@ -56,25 +56,26 @@ echo "  Skipping installing Z3 (install manually if needed)"
 # cd ../..
 # popd
 
-## Build and install Yosys
-### Build and install abc first (needed by yosys)
-pushd .
-echo "  Installing ABC from https://github.com/berkeley-abc/abc (needed by yosys) ..."
-git clone https://github.com/berkeley-abc/abc.git
-cd abc
-make -j$(nproc)
-export ABCEXTERNAL="$PWD/abc"
-echo "  Done!"
-popd
-### Build and install yosys
-pushd .
-echo "  Installing Yosys (custom version) from https://github.com/aman-goel/yosys ..."
-git clone https://github.com/aman-goel/yosys.git
-cd yosys
-make config-gcc
-make -j$(nproc) PREFIX="$PWD"
-echo "  Done!"
-popd
+echo "Skipping installation of yosys (install it manually if needed)"
+# ## Build and install Yosys
+# ### Build and install abc first (needed by yosys)
+# pushd .
+# echo "  Installing ABC from https://github.com/berkeley-abc/abc (needed by yosys) ..."
+# git clone https://github.com/berkeley-abc/abc.git
+# cd abc
+# make -j$(nproc)
+# export ABCEXTERNAL="$PWD/abc"
+# echo "  Done!"
+# popd
+# ### Build and install yosys
+# pushd .
+# echo "  Installing Yosys (custom version) from https://github.com/aman-goel/yosys ..."
+# git clone https://github.com/aman-goel/yosys.git
+# cd yosys
+# make config-gcc
+# make -j$(nproc) PREFIX="$PWD"
+# echo "  Done!"
+# popd
 
 
 RETURN="$?"
