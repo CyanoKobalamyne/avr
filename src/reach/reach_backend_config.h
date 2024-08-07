@@ -1,1 +1,1 @@
-#define BACKEND_M5 1
+#define BACKEND_Y2 1
