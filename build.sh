@@ -13,6 +13,7 @@ popd
 # Build AVR source
 pushd .
 cd src
+export STATIC_MODE=1
 make -j$(nproc) all
 echo "#define BACKEND_BT" > reach/reach_backend_config.h
 make BIN_DIR=$(pwd)/../build/bin_bt_cad -j$(nproc) all
