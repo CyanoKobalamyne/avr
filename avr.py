@@ -18,9 +18,9 @@ import sys
 version=2.1
 
 SCRIPT_DIR = os.path.dirname(__file__) + "/"
-SCRIPT_PATH = SCRIPT_DIR + "build/avr"
 
 DEFAULT_TOP="-"
+DEFAULT_SCRIPT = SCRIPT_DIR + "build/avr"
 DEFAULT_BIN=SCRIPT_DIR + "build/bin"
 DEFAULT_NAME="test"
 DEFAULT_PROP_SELECT="-"
@@ -62,6 +62,7 @@ def getopts(header):
 	p.add_argument('-i', '--init',  help='init file for initial state (default: initial block)', type=str, default=DEFAULT_INIT_FILE)
 	p.add_argument('-n', '--name',      help='<test-name> (default: %s)' % DEFAULT_NAME, type=str, default=DEFAULT_NAME)
 	p.add_argument('-o', '--out',       help='<output-path> (default: %s)' % DEFAULT_OUT, type=str, default=DEFAULT_OUT)
+	p.add_argument('--script',          help='shell script path (default: %s)' % DEFAULT_SCRIPT, type=str, default=DEFAULT_SCRIPT)
 	p.add_argument('-b', '--bin',       help='binary path (default: %s)' % DEFAULT_BIN, type=str, default=DEFAULT_BIN)
 	p.add_argument('-y', '--yosys',     help='path to yosys installation (default: %s)' % DEFAULT_YOSYS, type=str, default=DEFAULT_YOSYS)
 	p.add_argument('--vmt',             help='toggles using vmt frontend (default: %s)' % DEFAULT_EN_VMT, action="count", default=0)
@@ -123,7 +124,7 @@ def main():
 	known, opts = getopts(header)
 	print(short_header)
 	print("Invocation:", " ".join(sys.argv))
-	if not os.path.isfile(SCRIPT_PATH):
+	if not os.path.isfile(opts.script):
 		raise Exception("avr: main shell script not found")
 	if not os.path.isfile(opts.bin + "/vwn"):
 		raise Exception("avr: vwn binary not found")
@@ -185,7 +186,7 @@ def main():
 				opts.yosys = ys_path
 			print("\t(found yosys in %s)" % opts.yosys)
 	
-	command = SCRIPT_PATH
+	command = opts.script
 	command = command + " " + f
 	command = command + " " + str(opts.top)
 	command = command + " " + path
