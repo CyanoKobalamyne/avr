@@ -14,7 +14,6 @@ import subprocess
 import argparse
 import tempfile
 import shutil
-import ntpath
 import re
 
 version=2.1
@@ -116,9 +115,9 @@ short_header="""AVR
 Copyright (c) 2016 - Present  Aman Goel and Karem Sakallah, University of Michigan"""
 
 def split_path(name):
-	head, tail = ntpath.split(name)
+	head, tail = os.path.split(name)
 	if not tail:
-		tail = ntpath.basename(head)
+		tail = os.path.basename(head)
 	return head, tail
 
 def main():
