@@ -15,9 +15,7 @@ import argparse
 import tempfile
 import shutil
 import ntpath
-from distutils import spawn
 import re
-from distutils.spawn import find_executable
 
 version=2.1
 
@@ -177,7 +175,7 @@ def main():
 	else:
 		print("\t(frontend: yosys)")
 		if not os.path.isfile(opts.yosys + "/yosys"):
-			ys_path = find_executable('yosys')
+			ys_path = shutil.which('yosys')
 			if not ys_path:
 				if not os.path.isfile("/usr/local/bin/yosys"):
 					raise Exception("Please install yosys (check deps/build_deps.sh)")
