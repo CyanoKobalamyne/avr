@@ -62,6 +62,7 @@ def getopts(header):
 	p.add_argument('-n', '--name', help='<test-name> (default: %s)' % DEFAULT_NAME, type=str, default=DEFAULT_NAME)
 	p.add_argument('-o', '--out', help='<output-path> (default: %s)' % DEFAULT_OUT, type=str, default=DEFAULT_OUT)
 	p.add_argument('-b', '--bin', help='binary path (default: %s)' % DEFAULT_BIN, type=str, default=DEFAULT_BIN)
+	p.add_argument('-c', '--script', help='shell script path (default: <binary path>/../../avr)', type=str)
 	p.add_argument('--backend', help='backend to use: y2, bt, y2bt (default: %s)' % DEFAULT_BACKEND, type=str, default=DEFAULT_BACKEND)
 	p.add_argument('-y', '--yosys', help='path to yosys installation (default: %s)' % DEFAULT_YOSYS, type=str, default=DEFAULT_YOSYS)
 	p.add_argument('--vmt', help='toggles using vmt frontend (default: %s)' % DEFAULT_EN_VMT, action="count", default=0)
@@ -122,8 +123,9 @@ def split_path(name):
 def main():
 	known, opts = getopts(header)
 	print(short_header)
-	if not os.path.isfile(opts.bin + "/../../avr"):
-		raise Exception(f"avr: main shell script not found in {opts.bin}/../../avr")
+	script_path = opts.script or opts.bin + "/../../avr"
+	if not os.path.isfile(script_path):
+		raise Exception(f"avr: main shell script not found at {script_path}")
 	if not os.path.isfile(opts.bin + "/vwn"):
 		raise Exception(f"avr: vwn binary not found in {opts.bin}")
 	if not os.path.isfile(opts.bin + "/dpa"):
@@ -186,7 +188,7 @@ def main():
 				opts.yosys = ys_path
 			print("\t(found yosys in %s)" % opts.yosys)
 
-	command = f"{opts.bin}/../../avr"
+	command = script_path
 	command = command + " " + f
 	command = command + " " + str(opts.top)
 	command = command + " " + path
