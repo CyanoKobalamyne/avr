@@ -126,6 +126,7 @@ def split_path(name):
 def main():
 	known, opts = getopts(header)
 	print(short_header)
+	print("Invocation:", " ".join(sys.argv))
 	if not os.path.isfile(SCRIPT_PATH):
 		raise Exception("avr: main shell script not found")
 	if not os.path.isfile(opts.bin + "/vwn"):
