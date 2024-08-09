@@ -9,10 +9,11 @@
 # Author: Aman Goel (amangoel@umich.edu), University of Michigan
 ######################################################################################
 
-import os, sys
-import subprocess
 import argparse
+import os
 import shutil
+import subprocess
+import sys
 
 version=2.1
 
