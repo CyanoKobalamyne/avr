@@ -12,9 +12,7 @@
 import os, sys
 import subprocess
 import argparse
-import tempfile
 import shutil
-import re
 
 version=2.1
 
