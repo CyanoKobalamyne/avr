@@ -23,9 +23,9 @@ pushd .
 echo "  Installing Boolector from https://github.com/Boolector/boolector ..."
 git clone https://github.com/Boolector/boolector.git
 cd boolector
-./contrib/setup-btor2tools.sh
+CMAKE_POLICY_VERSION_MINIMUM=3.5 ./contrib/setup-btor2tools.sh
 ./contrib/setup-cadical.sh
-./configure.sh --only-cadical
+CMAKE_POLICY_VERSION_MINIMUM=3.5 ./configure.sh --only-cadical
 cd build
 make -j$(nproc)
 cd ..
