@@ -9,9 +9,11 @@
 # Author: Aman Goel (amangoel@umich.edu), University of Michigan
 ######################################################################################
 
-import os
-import subprocess
 import argparse
+import os
+import pathlib
+import subprocess
+import sys
 from shutil import which
 
 version="2.3.0"
@@ -122,7 +124,7 @@ def split_path(name):
 
 def main():
 	known, opts = getopts(header)
-	print(short_header)
+	print(short_header, file=sys.stderr)
 	script_path = opts.script or opts.bin + "/../../avr"
 	if not os.path.isfile(script_path):
 		raise Exception(f"avr: main shell script not found at {script_path}")
@@ -161,20 +163,20 @@ def main():
 		if (opts.bt % 2 == 1):
 			en_bt = not DEFAULT_EN_BTOR2
 
-	print("\t(output dir: %s/work_%s)" % (opts.out, opts.name))
-	print("\t(backend: %s)" % opts.backend)
+	print("\t(output dir: %s/work_%s)" % (opts.out, opts.name), file=sys.stderr)
+	print("\t(backend: %s)" % opts.backend, file=sys.stderr)
 
 	if (en_jg):
-		print("\t(frontend: jg)")
+		print("\t(frontend: jg)", file=sys.stderr)
 		en_vmt = False
 		en_bt = False
 	elif en_vmt:
-		print("\t(frontend: vmt)")
+		print("\t(frontend: vmt)", file=sys.stderr)
 		en_bt = False
 	elif en_bt:
-		print("\t(frontend: btor2)")
+		print("\t(frontend: btor2)", file=sys.stderr)
 	else:
-		print("\t(frontend: yosys)")
+		print("\t(frontend: yosys)", file=sys.stderr)
 		if not os.path.isfile(opts.yosys + "/yosys"):
 			ys_path = which('yosys')
 			if ys_path is None:
@@ -186,7 +188,7 @@ def main():
 				if ys_path.endswith('/yosys'):
 					ys_path = ys_path[:-6]
 				opts.yosys = ys_path
-			print("\t(found yosys in %s)" % opts.yosys)
+			print("\t(found yosys in %s)" % opts.yosys, file=sys.stderr)
 
 	command = script_path
 	command = command + " " + f
@@ -273,7 +275,19 @@ def main():
 
 	s = subprocess.call("exec " + command, shell=True)
 	if (s != 0):
+		print("error")
 		raise Exception("avr ERROR: return code %d" % s)
+
+	result_path = pathlib.Path(opts.out) / f"work_{opts.name}" / "result.pr"
+	with result_path.open() as result_file:
+		status = result_file.read()[4:5]
+	match status:
+		case "h":
+			print("\nunsat")
+		case "v":
+			print("\nsat")
+		case _:
+			print("\nunknown")
 
 if __name__ == '__main__':
 	main()
