@@ -15,6 +15,7 @@ fi
 # Build and install dependencies
 pushd .
 cd deps
+rm -rf boolector btor2tools mathsat yices2
 ./build_deps.sh
 cd ..
 popd
@@ -23,6 +24,7 @@ popd
 # Build AVR source
 pushd .
 cd src
+make clean
 make -j$(nproc) all
 cd ..
 popd
