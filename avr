@@ -295,6 +295,7 @@ then
 fi
 
 $p_bin/reach_${backendSuffix} $OUT_PATH $p_bin > $OUT_PATH/data/reach.output 2>> >(tee -a $OUT_PATH/avr.err >&2)  & echo $! > $pidFile
+trap "kill %" SIGINT SIGHUP SIGQUIT SIGTERM
 wait
 avr_exit=$?
 
