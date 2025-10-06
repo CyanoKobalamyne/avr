@@ -3,9 +3,8 @@ set -e
 
 if [[ $(uname) == "Linux" ]]; then
     if [[ $(id -u) == 0 ]]; then
-        apt update
-        apt install -y git autoconf gperf libgmp3-dev curl cmake
-        apt install -y build-essential bison flex libreadline-dev gawk tcl-dev libffi-dev git graphviz xdot pkg-config python3 libboost-system-dev libboost-python-dev libboost-filesystem-dev zlib1g-dev
+        apt-get update
+        apt-get install -y autoconf build-essential cmake curl gperf git libgmp-dev python-is-python3 wget
     fi
 else
     echo "Currently, installing on Linux (Ubuntu/Centos/AL2) is only supported."
