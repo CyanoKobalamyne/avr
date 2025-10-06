@@ -12,6 +12,8 @@
 import argparse
 import os
 import pathlib
+import shlex
+import signal
 import subprocess
 import sys
 from shutil import which
@@ -273,7 +275,11 @@ def main():
 
 	command = command + " " + str(opts.backend)
 
-	s = subprocess.call("exec " + command, shell=True)
+	process = subprocess.Popen(shlex.split(command))
+	for signum in [signal.SIGINT, signal.SIGHUP, signal.SIGQUIT, signal.SIGTERM]:
+		signal.signal(signum, lambda *_: process.terminate())
+	process.communicate()
+	s = process.returncode
 	if (s != 0):
 		print("error")
 		raise Exception("avr ERROR: return code %d" % s)
